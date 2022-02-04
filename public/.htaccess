@@ -1,0 +1,16 @@
+# Various rewrite rules.
+<IfModule mod_rewrite.c>
+  RewriteEngine on
+ 
+  # Rewrite URLs of the form 'x' to the form 'index.php?q=x'.
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_URI} !=/favicon.ico
+  RewriteRule ^(.*)$ index.php?q=$1 [L,QSA]
+  <IfModule mod_suphp.c>
+suPHP_ConfigPath /home/username/public_html/subfolder
+</IfModule>
+
+</IfModule>
+ 
+# $Id: .htaccess,v 1.90.2.1 2008/07/08 09:33:14 goba Exp $
