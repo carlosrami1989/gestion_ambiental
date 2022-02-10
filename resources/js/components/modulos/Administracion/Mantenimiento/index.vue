@@ -63,33 +63,36 @@
 
 
         
-        
-         
           <v-select
-          
-    v-model="form.id_departamento"
-          :items="departamento_"
-          label="Seleccionar el departamento"
-           item-text="descripcion"
-          item-value="id"
-          dense
-          outlined
-            @change="consultasResponsable(form.id_departamento)"
-        ></v-select>
-
-        
-          <v-select
-    v-model="form.responsable"
+            clearable
+          v-model="form.responsable"
           :items="responsable_"
           label="Seleccionar Responsable"
-           item-text="NOMBRESALL"
+           item-text="ALL"
           item-value="id"
+         
          
           dense
             
           outlined
         ></v-select>
 
+        
+         
+          <v-select
+          clearable
+       v-model="form.id_departamento"
+          :items="departamento_"
+          label="Seleccionar el departamento donde proviene el desecho"
+           item-text="descripcion"
+          item-value="id"
+          dense
+          outlined
+         
+          
+        ></v-select>
+
+        
 
     <v-text-field
       v-model="form.observacion"
@@ -304,6 +307,11 @@
 
     },
     methods: {
+      Onchage(value){
+        this.form.responsable = value.id;
+console.log(value);
+
+      },
       limpiar(){
         
            
@@ -357,8 +365,24 @@
             
           }
       },
+      OnchangeDepartamento(value){
+      if (value!=null) {
+        console.log(value);
+        
+           this.form.id_departamento = value.id;
+        }
+      },
+      OnchangeResponsable(value){
+        if (value!=null) {
+           this.form.responsable = value.id;
+        }
+      },
       createClasificacion() {
+   
    this.$refs.form.validate()
+    
+       
+         
         let that = this;
         let url =
           this.$store.getters.getRuta +
@@ -486,7 +510,10 @@
       
     },
      
-     consultasDepartamento() {
+     consultasDepartamento(value) {
+      //  if (value!=null) {
+      //    console.log(value);
+         
        
        
        
@@ -494,7 +521,9 @@
         let url =
           this.$store.getters.getRuta +
           "/modulos/admision/paciente/cargarDepartamento";
-        
+        // let url =
+        //   this.$store.getters.getRuta +
+        //   "/modulos/admision/paciente/cargarDepartamentoid/"+value.Departamento;
         axios
           .get(url)
           .then(function (response) {
@@ -510,16 +539,16 @@
            
           });
          
-      
+     // }
     },
 
-      consultasResponsable(value) {
-        console.log(value);
+      consultasResponsable() {
+        
         
         let that = this;
         let url =
           this.$store.getters.getRuta +
-          "/modulos/admision/paciente/cargarResponsable_de/"+value;
+          "/modulos/admision/paciente/cargarResponsable";
         
         axios
           .get(url)

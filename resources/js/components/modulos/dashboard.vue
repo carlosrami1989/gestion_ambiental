@@ -1,9 +1,10 @@
 <template>
-    <div>
-        <v-row dense>
+   
+  <div>
+
+        <v-row >
                 <v-col
-                cols="12"
-                
+                 
                 >
                  <v-card
                     
@@ -30,6 +31,70 @@
           </v-card>
         </v-col>
       </v-row>
+         <v-row dense
+          xl="4"
+               md="2">
+                <v-col
+              
+            
+                
+                >
+                 <v-card
+                    
+                >
+            <v-card-title class="text-h5">
+              Gestión por Departamento
+
+            </v-card-title>
+            <br>
+             <br>
+             
+ 
+               <canvas
+              id="ingresospacientes"
+              height="120px"
+              width="auto"
+              
+             
+            ></canvas>
+                  
+
+            
+             
+          </v-card>
+        </v-col>
+         <v-col
+                  
+             
+                >
+                 <v-card
+                    
+                >
+            <v-card-title class="text-h5">
+              Gestión de Responsable
+
+            </v-card-title>
+            <br>
+             <br>
+             
+ 
+               <canvas
+              id="ingresospacientes"
+              height="120px"
+              width="auto"
+              
+             
+            ></canvas>
+                  
+
+            
+             
+          </v-card>
+        </v-col>
+      </v-row>
+  <br>
+  <v-divider></v-divider>
+  <br>
     <v-row dense>
         <v-col
           cols="12"
@@ -177,7 +242,8 @@
                          
                             <v-icon 
                            color="green"
-                            size="80px">
+                            size="80px"
+                            @click="consultarExcel()">
                          mdi-database-check
                             </v-icon>
                             
@@ -270,9 +336,12 @@
          <!-- fin -->
         </v-col>
       </v-row>
+ 
+    
+  </div>
       <!-- aqui termina :v -->
-    </div>
-</template>
+   
+</template> 
 <script>
 
 
@@ -320,6 +389,17 @@ export default {
        
     },
     methods: {
+       consultarExcel(value){
+     // console.log(value);
+      
+       window.open(
+                  this.$store.getters.getRuta +
+                    "/modulos/admision/paciente/generacionExcel");
+
+       
+
+    },
+
       consultasTotales() {
  
         let that = this;

@@ -73,7 +73,11 @@ Route::group(['prefix' => 'modulos/admision', 'middleware' => ['auth:web'], 'ver
         //reporte
 
         Route::get('generacionExcel', 'tipo_desechos@generacionExcel');
+
         Route::get('generacionPdf', 'tipo_desechos@generacionPDF');
+
+        Route::post('generacionDocumento', 'tipo_desechos@createreporte');
+
 
 
 

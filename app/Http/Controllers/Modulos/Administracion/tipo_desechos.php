@@ -28,6 +28,93 @@ class tipo_desechos extends Controller
 {
 //
 //
+public function createreporte(Request $request){
+
+    //return  response()->json(['data' =>$request->all()], 200);
+    try {
+        //code...
+        $tipo_desechos="";
+        $clasificacion_desechos="";
+        $descripcion_desechos="";
+        $responsable="";
+        $id_departamento="";
+       
+
+ 
+
+        if ($request->tipo_desechos ==null || $request->tipo_desechos ==0) {
+            # code...
+            $tipo_desechos="%";
+        }else {
+            # code...
+            $tipo_desechos=$request->tipo_desechos;
+        }
+        if ($request->clasificacion_desechos ==null || $request->clasificacion_desechos ==0) {
+            # code...
+            $clasificacion_desechos="%";
+        }else {
+            $clasificacion_desechos=$request->clasificacion_desechos;
+        }
+        if ($request->descripcion_desechos ==null || $request->descripcion_desechos ==0) {
+            # code...
+            $descripcion_desechos="%";
+        }else {
+            $descripcion_desechos=$request->descripcion_desechos;
+        }
+        if ($request->responsable ==null || $request->responsable ==0) {
+            # code...
+            $responsable="%";
+        }else {
+            $responsable=$request->responsable;
+        }
+        if ($request->id_departamento ==null || $request->id_departamento ==0) {
+            # code...
+            $id_departamento="%";
+        }else {
+            $id_departamento=$request->id_departamento;
+        }
+
+
+
+        // 'id_tipo_desechos', 
+        // 'id_clasificacion', 
+        // 'id_clasificacion_descripcion', 
+        // 'id_departamento', 
+        // 'id_responsable', 
+ 
+        $resultado = tbIngresoInfo::DatosInformacion()
+        ->where('id_tipo_desechos', 'like',   $tipo_desechos )
+         ->where('id_clasificacion', 'like', '%' . $clasificacion_desechos . '%')
+         ->where('id_clasificacion_descripcion', 'like', '%' . $descripcion_desechos . '%')
+         ->where('id_departamento', 'like', '%' . $id_departamento . '%')
+         ->where('id_responsable', 'like', '%' . $responsable . '%')
+        ->whereBetween('created_at', [date($request->date_desde),date($request->date_hasta)]) 
+        ->orderby('created_at','desc')->get();
+        // date($request->date_desde)])
+        
+    
+       // return  response()->json(['data' => $resultado], 200);
+        
+        $pdf = PDF::loadView('reports.excel', [
+            'lista' => $resultado,
+            'titulo' => 'CIRUGÍAS PROGRAMADAS POR PERIODOS',
+
+
+        ]);
+        return $pdf->output();
+        //return response()->file($pdf->stream("Cirugias"));
+        
+       // return $pdf->download("Cirugias.pdf");
+
+    
+
+       
+ 
+    } catch (Exception $e) {
+        return  response()->json(['data' => $e->getMessage()], 500);
+        //throw $th;
+    }
+}
 public function generacionPDF(){
     try {
         //code...
@@ -67,8 +154,8 @@ public function generacionExcel(){
 
         $resultado = tbIngresoInfo::DatosInformacion()->orderby('created_at','desc')->get();
        
-        $nameExcel = 'Reporte General de Desechos' . '.xls';
-       // return  response()->json(['data' =>$nameExcel], 200);
+        $nameExcel = 'Reporte General de Desechos-'.$fecha. '.xls';
+       // return  response()->json(['data' =>$resultado], 200);
       
         return Excel::download(new UsersExport($resultado,'Reporte General de Desechos'), 
         $nameExcel, header("Content-Type: application/vnd.ms-excel;"));
@@ -117,12 +204,12 @@ public function createInformacion(Request $request){
     $request->validate([
          
      
-        'peso' => 'required',
-        'tipo_desechos' => 'required',
-        'clasificacion_desechos' => 'required',
+        'peso' => 'required|not_in:0',
+        'tipo_desechos' => 'required|not_in:0',
+        'clasificacion_desechos' => 'required|not_in:0',
         'descripcion_desechos' => 'required',
-        'responsable' => 'required',
-        'id_departamento' => 'required',
+        'responsable' => 'required|not_in:0',
+        'id_departamento' => 'required|not_in:0',
 
 
 
@@ -168,7 +255,7 @@ public function createInformacion(Request $request){
 public function consultarDepartamentoid($id){
     try {
         //code..
-        $consulta = tbDepartamento::all()->where('id',$id);
+        $consulta = tbDepartamento::where('id',$id)->get();
 
         
         return  response()->json(['data' =>$consulta], 200);

@@ -4,6 +4,7 @@ namespace App\Models\Modulos\Parametrizacion;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Modulos\Parametrizacion\tbDepartamento;
 
 class tbResponsable extends Model
 {
@@ -36,8 +37,10 @@ class tbResponsable extends Model
 
     public function getALLattribute()
     {
+        $descripcion = tbDepartamento::select('descripcion')
+        ->where('id',$this->Departamento)->first();
         //return calculaEdad($this->CirProHisCli);
-        return $this->apellidos.' '.$this->nombres.' - '.$this->departamento;
+        return $this->apellidos.' '.$this->nombres.' - '.$descripcion->descripcion;
 
        
     }

@@ -87,17 +87,14 @@
 
     <!-- Provides the application the proper gutter -->
     <v-container fluid>
-
+     
       <!-- If using vue-router -->
       <router-view></router-view>
+     
     </v-container>
   </v-main>
 
-  <v-footer app>
-    <!-- -->
-     
-  
-  </v-footer>
+   
    </div>
 </template>
 
@@ -200,13 +197,15 @@ export default {
           .then(function (response) {
  
             if (response.data.data[0].id_perfil==1) {
-              that.items.push( {name:'Dashboard',icon: 'mdi-view-dashboard', ruta:prefix,color:'primary'},
+              that.items.push( {name:'Dashboard',icon: 'mdi-view-dashboard', ruta:"/",color:'primary'},
         {name:'Tipos de Desechos',icon: 'mdi-delete-variant', ruta:prefix+'/modulos/parametrizacion/tipodesechos',color:'pink'},
          {name:'Clasificación de Desechos',icon: 'mdi-recycle-variant', ruta:prefix+'/modulos/parametrizacion/clasificaciondesechos',color:'cyan darken-4'},
         {name:'Desechos por Descripción',icon: 'mdi-certificate', ruta:prefix+'/modulos/parametrizacion/desechosdescripcion',color:'purple'},
          {name:'Ingreso de Desechos',icon: 'mdi-clipboard-check', ruta:prefix+'/modulos/administracion/ingreso',color:'green darken-4'},
          //{name:'Asignación de Perfil',icon: 'mdi-account-multiple-plus', ruta:prefix+'',color:'orange darken-4'},
          {name:'Creación de Usuario',icon: 'mdi-account-lock', ruta:prefix+'/modulos/seguridad/registrar',color:'teal'},
+         {name:'Reportes General',icon: 'mdi-clipboard-text-multiple', ruta:prefix+'/modulos/reporte/mostrar',color:'red'},
+
         //{name:'Departamentos',icon: 'mdi-file-document', ruta:prefix+'-',color:'green darken-4'},
         {name:'Rotary Astillero',icon: 'mdi-earth', ruta:'-',color:'orange darken-4'});
             } else {

@@ -12,6 +12,9 @@ import DesechosDescripcion from ".././components/modulos/Parametrizacion/Desecho
 import ingresodesechos from ".././components/modulos/Administracion/Mantenimiento/index.vue";
 import departamento from ".././components/modulos/Parametrizacion/TiposDesechos/index.vue";
 
+import Reportes from ".././components/modulos/Reporte/index.vue";
+
+
 
 ///modulos/administracion/ingreso
 //seguridad
@@ -72,6 +75,15 @@ const home = [{
             "/modulos/seguridad/registrar",
         name: "Creación de Usuario",
         component: registrar,
+
+
+    },
+    //Reportes
+    {
+        path: prefix +
+            "/modulos/reporte/mostrar",
+        name: "Reportes General",
+        component: Reportes,
 
 
     },
